@@ -37,7 +37,7 @@
 </h3>
 
 <h4 align="center">
-  <a href="https://simonwep.github.io/pickr/">Fully Featured demo</a>
+  <a href="https://barry1990.github.io/pickr/">改造之后的Demo</a>
 </h4>
 
 <br>
