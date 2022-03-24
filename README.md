@@ -3,7 +3,7 @@
 </h1>
 
 <h3 align="center">
-    Flat, Simple, Hackable Color-Picker.
+     在原有的Simonwep/pickr功能上改了点样式
 </h3>
 
 <p align="center">
