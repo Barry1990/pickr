@@ -22,7 +22,8 @@ export default instance => {
 
         <div :ref="app" class="pcr-app ${appClass || ''}" data-theme="${theme}" ${inline ? 'style="position: unset"' : ''} aria-label="${t('ui:dialog', 'color picker dialog')}" role="window">
           <div class="pcr-selection" ${hidden(components.palette)}>
-            <div :obj="preview" class="pcr-color-preview" ${hidden(components.preview)}>
+            <div :obj="preview"  class="pcr-color-preview" ${hidden(components.preview)}>
+              <div :ref="history" class="pcr-history" style="width:100%;height:100%"></div>
               <button type="button" :ref="lastColor" class="pcr-last-color" aria-label="${t('btn:last-color')}"></button>
               <div :ref="currentColor" class="pcr-current-color"></div>
             </div>

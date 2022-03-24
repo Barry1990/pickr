@@ -22,6 +22,7 @@ export default class Pickr {
         'btn:toggle': 'toggle color picker dialog',
         'btn:swatch': 'color swatch',
         'btn:last-color': 'use previous color',
+        'btn:his-color': 'use history color',
         'btn:save': 'Save',
         'btn:cancel': 'Cancel',
         'btn:clear': 'Clear',
@@ -56,6 +57,7 @@ export default class Pickr {
 
         i18n: {},
         swatches: null,
+        historys: null,
         inline: false,
         sliders: null,
 
@@ -82,6 +84,7 @@ export default class Pickr {
     _color = HSVaColor();
     _lastColor = HSVaColor();
     _swatchColors = [];
+    _hisColors = [];
 
     // Animation frame used for setup.
     // Will be cancelled in case of destruction.
@@ -105,7 +108,7 @@ export default class Pickr {
         // Assign default values
         this.options = opt = Object.assign({...Pickr.DEFAULT_OPTIONS}, opt);
 
-        const {swatches, components, theme, sliders, lockOpacity, padding} = opt;
+        const {swatches, components, theme, sliders, lockOpacity, padding, historys} = opt;
 
         if (['nano', 'monolith'].includes(theme) && !sliders) {
             opt.sliders = 'h';
@@ -131,6 +134,17 @@ export default class Pickr {
         if (swatches && swatches.length) {
             swatches.forEach(color => this.addSwatch(color));
         }
+
+        // if (historys && historys.length) {
+        //     historys.forEach(color => this.addHistory(color));
+        // }
+
+        const historyColors = JSON.parse( localStorage.getItem('history-colors'));
+
+        if (historyColors && historyColors.length) {
+            historyColors.forEach(color => this.addHistory(color));
+        }
+
 
         // Initialize positioning engine
         const {button, app} = this._root;
@@ -304,10 +318,15 @@ export default class Pickr {
                     }
 
                     // Check if there's a swatch which color matches the current one
-                    const hexa = color.toHEXA().toString();
-                    for (const {el, color} of inst._swatchColors) {
-                        el.classList[hexa === color.toHEXA().toString() ? 'add' : 'remove']('pcr-active');
-                    }
+                    // todo Tenda 暂时屏蔽
+                    // const hexa = color.toHEXA().toString();
+                    // for (const {el, color} of inst._swatchColors) {
+                    //     el.classList[hexa === color.toHEXA().toString() ? 'add' : 'remove']('pcr-active');
+                    // }
+
+                    // for (const {el, color} of inst._hisColors) {
+                    //     el.classList[hexa === color.toHEXA().toString() ? 'add' : 'remove']('pcr-active');
+                    // }
 
                     // Change current color
                     currentColor.style.setProperty('--pcr-color', cssRGBaString);
@@ -396,6 +415,10 @@ export default class Pickr {
             // Save color
             _.on(_root.interaction.save, 'click', () => {
                 !this.applyColor() && !options.showAlways && this.hide();
+
+                // Tenda 点击保存时更新 localStorage
+                this.addHistory(this._color.toRGBA().toString(0));
+                localStorage.setItem('history-colors', JSON.stringify(this._hisColors.map(x => x.color.toRGBA().toString())));
             }),
 
             // User input
@@ -623,7 +646,7 @@ export default class Pickr {
 
             // Create new swatch HTMLElement
             const el = _.createElementFromString(
-                `<button type="button" style="--pcr-color: ${color.toRGBA().toString(0)}" aria-label="${this._t('btn:swatch')}"/>`
+                `<button type="button" style="--pcr-color: ${color.toRGBA().toString(0)}" aria-label="${this._t('btn:his-color')}"/>`
             );
 
             // Append element and save swatch data
@@ -663,6 +686,57 @@ export default class Pickr {
             return true;
         }
 
+        return false;
+    }
+
+    /**
+     * Tenda 添加历史颜色
+     * @param {*} color
+     * @returns
+     */
+    addHistory(color) {
+        const {values} = this._parseLocalColor(color);
+
+        if (values) {
+            const {_hisColors, _root} = this;
+            const color = HSVaColor(...values);
+
+            const el = _.createElementFromString(
+                `<button type="button" class="pcr-his-color"  style="--pcr-color: ${color.toRGBA().toString(0)}" aria-label="${this._t('btn:his')}"/>`
+            );
+
+            // 设置history长度为5
+            if (_hisColors.length >= 5) {
+                this.removeHistory(0);
+            }
+
+            _root.preview.history.appendChild(el);
+            _hisColors.push({el, color});
+
+            this._eventBindings.push(
+                _.on(el, 'click', () => {
+                    this.setHSVA(...color.toHSVA(), true);
+                    this._emit('change', color, 'history', this);
+                })
+            );
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Tenda 删除历史颜色
+     * @param {*} index
+     * @returns
+     */
+    removeHistory(index) {
+        const hisColor = this._hisColors[index];
+        if (hisColor) {
+            const {el} = hisColor;
+            this._root.preview.history.removeChild(el);
+            this._hisColors.splice(index, 1);
+            return true;
+        }
         return false;
     }
 

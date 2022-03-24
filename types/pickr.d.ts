@@ -143,7 +143,7 @@ declare namespace Pickr {
         'cancel' |
         'swatchselect';
 
-    type Theme = 'classic' | 'monolith' | 'nano';
+    type Theme = 'classic' | 'monolith' | 'nano' | 'tenda';
 
     type Position =
         'top-start' |
