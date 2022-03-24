@@ -234,10 +234,28 @@
         }
 
         .pcr-result {
+            width: 120px;
             color: $palette-darkgray;
             text-align: left;
-            flex: 1 1 8em;
-            min-width: 8em;
+            // flex: 1 1 8em;
+            // min-width: 4em;
+            transition: all 0.2s;
+            border-radius: $border-radius-mid;
+            background: $palette-snow-white;
+            cursor: text;
+
+            &::selection {
+                background: $palette-cloud-blue;
+                color: #fff;
+            }
+        }
+
+        .pcr-result-percent {
+            width: 62px;
+            color: $palette-darkgray;
+            text-align: left;
+            // flex: 1 1 8em;
+            // min-width: 4em;
             transition: all 0.2s;
             border-radius: $border-radius-mid;
             background: $palette-snow-white;

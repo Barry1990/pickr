@@ -433,8 +433,31 @@ export default class Pickr {
                 e.stopImmediatePropagation();
             }),
 
+            // 百分比变化
+            _.on(_root.interaction.resultPercent, ['keyup', 'input'], e => {
+
+                // eslint-disable-next-line no-console
+                const tempColor = this._color;
+                const colorA = e.target.value;
+                tempColor.a = Number(colorA.replace('%', '')) / 100;
+
+                // Fire listener if initialization is finish and changed color was valid
+                if (this.setColor(this._color.toHEXA().toString(), true) && !this._initializingActive) {
+                    this._emit('change', this._color, 'input', this);
+                    this._emit('changestop', 'input', this);
+                }
+
+                e.stopImmediatePropagation();
+            }),
+
             // Detect user input and disable auto-recalculation
             _.on(_root.interaction.result, ['focus', 'blur'], e => {
+                this._recalc = e.type === 'blur';
+                this._recalc && this._updateOutput(null);
+            }),
+
+            // 百分比变化
+            _.on(_root.interaction.resultPercent, ['focus', 'blur'], e => {
                 this._recalc = e.type === 'blur';
                 this._recalc && this._updateOutput(null);
             }),
@@ -560,6 +583,9 @@ export default class Pickr {
             const method = `to${_root.interaction.type().getAttribute('data-type')}`;
             _root.interaction.result.value = typeof _color[method] === 'function' ?
                 _color[method]().toString(options.outputPrecision) : '';
+
+            // 百分比
+            _root.interaction.resultPercent.value = `${Number(_color.toRGBA()[3] * 100)}%`;
         }
 
         // Fire listener if initialization is finish

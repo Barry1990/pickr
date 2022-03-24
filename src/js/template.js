@@ -48,6 +48,7 @@ export default instance => {
 
           <div :obj="interaction" class="pcr-interaction" ${hidden(Object.keys(components.interaction).length)}>
             <input :ref="result" class="pcr-result" type="text" spellcheck="false" ${hidden(components.interaction.input)} aria-label="${t('aria:input', 'color input field')}">
+            <input :ref="resultPercent" class="pcr-result-percent" type="text" spellcheck="false" ${hidden(components.interaction.input)} aria-label="${t('aria:input', 'color input field')}">
 
             <input :arr="options" class="pcr-type" data-type="HEXA" value="${lockOpacity ? 'HEX' : 'HEXA'}" type="button" ${hidden(components.interaction.hex)}>
             <input :arr="options" class="pcr-type" data-type="RGBA" value="${lockOpacity ? 'RGB' : 'RGBA'}" type="button" ${hidden(components.interaction.rgba)}>
