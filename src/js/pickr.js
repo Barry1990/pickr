@@ -424,8 +424,10 @@ export default class Pickr {
             // User input
             _.on(_root.interaction.result, ['keyup', 'input'], e => {
 
+                const hexColol = e.target.value.length > 7 ? e.target.value.slice(0, 7) : e.target.value;
+
                 // Fire listener if initialization is finish and changed color was valid
-                if (this.setColor(e.target.value, true) && !this._initializingActive) {
+                if (this.setColor(hexColol, true) && !this._initializingActive) {
                     this._emit('change', this._color, 'input', this);
                     this._emit('changestop', 'input', this);
                 }
@@ -582,7 +584,7 @@ export default class Pickr {
             // Construct function name and call if present
             const method = `to${_root.interaction.type().getAttribute('data-type')}`;
             _root.interaction.result.value = typeof _color[method] === 'function' ?
-                _color[method]().toString(options.outputPrecision) : '';
+                _color[method]().toString(options.outputPrecision).slice(0, 7) : '';
 
             // 百分比
             _root.interaction.resultPercent.value = `${Number(_color.toRGBA()[3] * 100)}%`;
