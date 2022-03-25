@@ -108,7 +108,7 @@ export default class Pickr {
         // Assign default values
         this.options = opt = Object.assign({...Pickr.DEFAULT_OPTIONS}, opt);
 
-        const {swatches, components, theme, sliders, lockOpacity, padding, historys} = opt;
+        const {swatches, components, theme, sliders, lockOpacity, padding} = opt;
 
         if (['nano', 'monolith'].includes(theme) && !sliders) {
             opt.sliders = 'h';
@@ -424,7 +424,11 @@ export default class Pickr {
             // User input
             _.on(_root.interaction.result, ['keyup', 'input'], e => {
 
-                const hexColol = e.target.value.length > 7 ? e.target.value.slice(0, 7) : e.target.value;
+                let hexColol = e.target.value;
+                if (e.target.value.length > 7) {
+                    _root.interaction.result.value = e.target.value.slice(0, 7);
+                    hexColol = e.target.value.slice(0, 7);
+                }
 
                 // Fire listener if initialization is finish and changed color was valid
                 if (this.setColor(hexColol, true) && !this._initializingActive) {
