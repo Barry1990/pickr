@@ -107,6 +107,7 @@
     }
 
     .pcr-history{
+        margin-top: -4px;
         > button {
             @include transparency-background(6px);
             font-size: 1em;
@@ -115,7 +116,7 @@
             height: calc(1.75em - 5px);
             border-radius: 0.15em;
             cursor: pointer;
-            margin: 2.5px;
+            // margin: 2.5px;
             flex-shrink: 0;
             justify-self: center;
             transition: all 0.15s;
@@ -234,14 +235,13 @@
         }
 
         .pcr-result {
-            width: 120px;
-            color: $palette-darkgray;
-            text-align: left;
+            width: 74px;
+            color: #47355A;            text-align: left;
             // flex: 1 1 8em;
             // min-width: 4em;
             transition: all 0.2s;
             border-radius: $border-radius-mid;
-            background: $palette-snow-white;
+            background: #C7C7C7 0% 0% no-repeat padding-box;
             cursor: text;
 
             &::selection {
@@ -251,14 +251,14 @@
         }
 
         .pcr-result-percent {
-            width: 62px;
-            color: $palette-darkgray;
+            width: 46px;
+            color: #47355A;
             text-align: left;
             // flex: 1 1 8em;
             // min-width: 4em;
             transition: all 0.2s;
             border-radius: $border-radius-mid;
-            background: $palette-snow-white;
+            background: #C7C7C7 0% 0% no-repeat padding-box;
             cursor: text;
 
             &::selection {
@@ -291,6 +291,12 @@
 
         .pcr-save {
             background: $palette-cloud-blue;
+            margin-left: 30px;
+            width: 45px;
+            height: 25px;
+            color: #60398A;
+            background: #E5DCEF 0% 0% no-repeat padding-box;
+            border-radius: 1px;
         }
 
         .pcr-clear,

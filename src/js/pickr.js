@@ -23,7 +23,7 @@ export default class Pickr {
         'btn:swatch': 'color swatch',
         'btn:last-color': 'use previous color',
         'btn:his-color': 'use history color',
-        'btn:save': 'Save',
+        'btn:save': 'OK',
         'btn:cancel': 'Cancel',
         'btn:clear': 'Clear',
 
