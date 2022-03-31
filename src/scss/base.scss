@@ -112,8 +112,8 @@
             @include transparency-background(6px);
             font-size: 1em;
             position: relative;
-            width: calc(1.75em - 5px);
-            height: calc(1.75em - 5px);
+            width: 1.375em;
+            height: 1.375em;
             border-radius: 0.15em;
             cursor: pointer;
             // margin: 2.5px;
@@ -168,8 +168,8 @@
             @include transparency-background(6px);
             font-size: 1em;
             position: relative;
-            width: calc(1.75em - 5px);
-            height: calc(1.75em - 5px);
+            width: 1.375em;
+            height: 1.375em;
             border-radius: 0.15em;
             cursor: pointer;
             margin: 2.5px;
@@ -235,8 +235,10 @@
         }
 
         .pcr-result {
-            width: 74px;
-            color: #47355A;            text-align: left;
+            font-size: 0.67em;   //16px
+            width: 6.69em;
+            color: #47355A;
+            text-align: left;
             // flex: 1 1 8em;
             // min-width: 4em;
             transition: all 0.2s;
@@ -251,7 +253,8 @@
         }
 
         .pcr-result-percent {
-            width: 46px;
+            font-size: 0.67em;
+            width: 4.125em;
             color: #47355A;
             text-align: left;
             // flex: 1 1 8em;
@@ -290,10 +293,10 @@
         }
 
         .pcr-save {
-            background: $palette-cloud-blue;
-            margin-left: 30px;
-            width: 45px;
-            height: 25px;
+            font-size: 0.8em;
+            margin-left: 2em;
+            width: 3.44em;
+            height: 1.82em;
             color: #60398A;
             background: #E5DCEF 0% 0% no-repeat padding-box;
             border-radius: 1px;

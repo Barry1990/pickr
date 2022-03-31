@@ -3,9 +3,10 @@
 @import '../base';
 
 .pcr-app[data-theme='tenda'] {
-    width: 227px;
-    max-width: 95vw;
-    padding: 0.8em;
+    font-size: 24px;
+    width: 13.75em;
+    max-width: 330px;
+    padding: 0.75em;
     background-color: #272727;
 
     .pcr-selection {
